@@ -37,6 +37,26 @@ return((sum)/nx);
 
 
 
+// function to calculate the average of input array
+template <class T>
+T optavg(T x[],T sig[],int nx){
+double sum, sum2;
+T signow, sig_2;
+sum = 0.0;
+for( int i = 0; i < nx; i = i + 1 ) {
+signow = sig[i];
+sig_2 = 1./(signow*signow);
+
+sum = sum + x[i]*sig_2;
+sum2 = sum2 + sig_2;
+}
+return(sum/sum2);
+
+}
+
+
+
+
 
 
 
@@ -160,12 +180,12 @@ f0 = 1./taudrw;
 for(int iw=0;iw<nf;iw = iw + 1) {
 freqnow = freq[iw];
 wnow = twopi*freqnow;
-a   = sqrt( p0*pow(freqnow/f0,a) / (1 + pow(freqnow/f0,(a-b));
+a   = sqrt( p0*pow(freqnow/f0,a) / (1 + pow(freqnow/f0,(a-b))));
 cknow = ((double) rand() / (RAND_MAX))*a;
 sknow = ((double) rand() / (RAND_MAX))*a;
 sum = sum + sknow*sin(wnow*tnow) + cknow*cos(wnow*tnow);
 } //end frequency loop
-y[it] = sum
+y[it] = sum;
 
 } // end time loop
 
@@ -214,16 +234,16 @@ y[it] = sum
 
 
 
-
+//
 
 int main ()
 {
-float *x,*y,*sig,ay,e;
+float *x,*y,*sig,ay,e, oa;
 int np,b;
 long m,c;
 double taudrw,f0drw,*freq,flodrw,fhidrw,df,*xdrw,*ydrw;
-int nfdwr;
-void drwfunc;
+int nfdrw;
+//void drwfunc;
 
 
 
@@ -283,6 +303,10 @@ e = median(y,np);
 cout << "Median = "<< e << endl;
 
 
+// caclulate the optimal average
+oa = optavg(y,sig,np);
+cout << "The optimal average is " << oa << endl;
+
 
 
 /*
@@ -297,9 +321,9 @@ df = (fhidrw - flodrw)/(nfdrw-1.0);
 taudrw = 1./(0.5*(fhidrw-flodrw));
 freq = new double [nfdrw];
 for (int i=0;i<nfdrw;i=i+1){
-freq[i] = flo + i*df;
+freq[i] = flodrw + i*df;
 }
-drwfunc = drw(xdrw,ydrw,np,freq,nfdrw,taudrw);
+drw(xdrw,ydrw,np,freq,nfdrw,taudrw);
 
 for (int i=0;i<np;i=i+1){
 cout << "xdrw="<<xdrw[i]<<"  ydrw="<<ydrw[i]<<"  taudrw="<<taudrw<<" "<< endl;
