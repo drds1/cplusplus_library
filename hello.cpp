@@ -1,4 +1,5 @@
 // i/o example
+/* HOW TO COMPILE 'g++-7 hello.cpp -fopenmp' */
 
 #include <iostream>
 #include <omp.h>

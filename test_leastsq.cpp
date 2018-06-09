@@ -73,6 +73,10 @@ grad = sum3/sum4;
 siggrad = sqrt(1/sum4);
 
 
+mop    = grad;
+sigmop = siggrad;
+cop    = intercept;
+sigcop = sigintercept;
 
 }
 

@@ -17,6 +17,8 @@ and decide to split between 3 threads??
 */
 
 
+/*HOW TO COMPILE... 'g++-7 test_fork.cpp -fopenmp' */
+
 int main()
 {
   const int size = 25600;
