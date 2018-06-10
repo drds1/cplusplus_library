@@ -197,6 +197,12 @@ for it = 1,n_iterations -->
 	 using back propagation
 	 i.e update all weights based on first training example, then the next one and so on
  now do that for n_iterations
+ 
+ 
+can have one algorithm for the inner layer neurons but will probably need 
+a seprate algorithm for the input layer and the output layer as these will 
+have a differentn number of neurons in each layer than the hidden layers
+hidden layer will be aregular 2d grid of nlayers <= 2 X nper layer ([ninputs + noutputs]/2)
 */
 
 
