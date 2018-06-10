@@ -1,35 +1,12 @@
-// now write function to calculate a damped random walk light curve
-void drw(double t[],double y[],int n,double freq[], int nf, double taudrw){
+#include <iostream>
+#include <omp.h>
+#include <stdlib.h>
+#include <math.h>                           /* math functions */
+#include "misc_functions.cpp"
 
-double sknow, cknow, p0=1.0,a=-2,b=-2,pi=3.141592653589793238462643383279;
-double twopi = 2*pi,wnow,tnow,sum=0.0,freqnow,f0;
+using namespace std;
 
-//time loop
-for(int it=0;it<n;it = it + 1) {
-tnow = t[it];
-
-sum = 0.0;
-//frequency loop
-f0 = 1./taudrw;
-for(int iw=0;iw<nf;iw = iw + 1) {
-freqnow = freq[iw];
-wnow = twopi*freqnow;
-a   = sqrt( p0*pow(freqnow/f0,a) / (1 + pow(freqnow/f0,(a-b))));
-cknow = ((double) rand() / (RAND_MAX))*a;
-sknow = ((double) rand() / (RAND_MAX))*a;
-sum = sum + sknow*sin(wnow*tnow) + cknow*cos(wnow*tnow);
-} //end frequency loop
-y[it] = sum;
-
-} // end time loop
-
-//sk  = mr.normdis(nf,0,1)*a
-//ck  = mr.normdis(nf,0,1)*a
-
-
-}
- 
- 
+// g++-7 neural_net_func.cpp
 
 /* compute the activation function for neuron input h = sum_nprevious (w_k O_k)
 weighted sum of inputs from previous layer
@@ -58,7 +35,7 @@ op[1:n] outputs from the n neurons of the previous layer
 */
 
 double weight_sum(double w[], double op[], int n){
-double = sum;
+double sum=0;
 
 for(int iw=0;iw<n;iw = iw + 1) {
 sum = sum + w[iw]*op[iw];
@@ -93,6 +70,7 @@ also need the derivative of the activation function for this jth neuron
 diff_af_j */
 double delta_j_in(double w_jl[], double delta_l[],int nl, double diff_af_j ){
 int iw;
+double sum=0;
 
 for(iw=0;iw<nl;iw=iw+1){
 sum = sum + w_jl[iw]*delta_l[iw];
@@ -128,6 +106,7 @@ using the back propagation
 void update_weight_ij(double eta, double op_upper[],double w_upper[],double w_lower[],\
 double delta_lower[], int n_lower, int n_upper,double w_upper_new[]){
 double delta_now,ws,af,diff_af;
+int iw;
 
 // compute the weighted sum of inputs to this neuron from the upper level
 ws = weight_sum(w_upper, op_upper, n_upper);
@@ -139,7 +118,7 @@ diff_af = diff_act_fun(af);
 // compute the delta for this level
 delta_now = delta_j_in(w_lower, delta_lower,n_lower, diff_af );
 
-for (iw=0;<n_upper;iw=iw+1){
+for (iw=0;iw<n_upper;iw=iw+1){
 w_upper_new[iw] = -eta*delta_now*op_upper[iw];
 }
 
@@ -152,6 +131,64 @@ w_upper_new[iw] = -eta*delta_now*op_upper[iw];
 
 // now need to build propper network using these routines above. 
 // start simple. How to decide number of layers and neurons in each layer?
+// the internet says you never need more than 2 hidden layers in a NN
+// and that the number of neurons / layer should be ave(Ninputs, Nouputs) = (Nin + nout)/2
+
+// double *x is like declaring allocatable array in fortran. You allocate it to an
+// arbitrary number of dimensions further down.
+int main(){
+double*test;
+double**xin,**whid; 
+int nits,ndim,ntest,n_level,n_per,nin,nout,i,i2;
+float **datin;
+// specify number of dimensions and number of tests of your neural net problem
+// when I get better at c++ I will automate this so the code can
+// get this information just from the input data file
+ndim = 3;
+ntest= 100;
+nin = ndim;
+nout = 1;
+
+// number of hidden layers and number of neurons / hidden layer
+n_level = 2;
+n_per   = ndim/2;
+
+
+
+
+/* load the test data and assign it to the proper array structure
+2d arrays are a pain in tha arse to assign you have to allocate an
+array of arrays. Define at top with ** then lose * when you allocate
+the 1st dimension and the lose all the stars when you allocate the 2nd dimension
+(dynamically allocated 2d arrays in c++ are like lists of lists in python)
+*/
+if( !(datin = read_file("lines.txt",ntest,ndim+1) ) ){return 0;}
+xin = new double*[ntest];
+for (i=0;i<ntest;i=i+1){
+xin[i]=new double [ndim];
+}
+
+test = new double [ntest];
+for(i=0;i<ntest;i=i+1){
+test[i] = datin[ndim][i];
+for(int i2=0;i2<ndim;i2=i2+1){
+xin[i][i2]=datin[i2][i];
+}
+}
+
+
+
+/* set the starting weights */
+
+
+
+
+
+
+
+}
+
+
 
 
 
