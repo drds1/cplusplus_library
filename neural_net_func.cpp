@@ -183,6 +183,22 @@ xin[i][i2]=datin[i2][i];
 
 
 
+/* run the network for n_iterations 
+http://deeplearning.stanford.edu/tutorial/
+
+This one specific to this type of example
+http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/
+See also wikipedia article on backpropagation
+https://en.wikipedia.org/wiki/Backpropagation
+for it = 1,n_iterations --> 
+	
+	for itrain = 1, ntrain
+	 update all neuron weights
+	 using back propagation
+	 i.e update all weights based on first training example, then the next one and so on
+ now do that for n_iterations
+*/
+
 
 
 
