@@ -128,6 +128,77 @@ w_upper_new[iw] = -eta*delta_now*op_upper[iw];
 
 
 
+void forward_prop_input(double xin[],double win[],\
+double hin[],double zop_out[], int nin){
+double sum;
+int iw;
+
+// compute the weighted sum of inputs to each of the nin neurons from each of the input data
+for(iw=0;iw<nin;iw=iw+1){
+sum = win[iw]*xin[iw];
+hin[iw] = sum;
+zop_out[iw] = act_fun(sum);
+}
+
+
+
+}
+
+
+
+// perform forward propagation for a neuron in an intermediate level of the network
+// must be symmetric with n_neurons per layer will be different if the first hidden
+// layer or the final hidden layer (layer before output layer or layer after 
+// input layer)
+
+// if input layer then nlayer_up set to n_inputs and zop_up[1:n_inputs] should be the
+// input values
+
+// if output layer then op is just the output of the whole neural network
+void forward_prop_middle(double w_up[],double zop_up[], int nlayer_up, double op){
+double sum=0;
+int iw;
+
+// compute the weighted sum of inputs to each of the nin neurons from each of the input data
+for(iw=0;iw<nlayer_up;iw=iw+1){
+sum = sum + w_up[iw]*zop_up[iw];
+op = act_fun(sum);
+}
+
+}
+
+
+
+
+
+
+
+//now perform forward propagation to compute and save the activations (outputs) for each neuron 
+// in the neural network.
+// n_hidden number of hidden layer
+// nh neurons in each hidden layer
+// nin neurons in input layer *usualy same as number of inputs
+// nop number of neurons in output layer (usually 1)
+void forward_prop_save(double w_up[],double zop_up[], int n_hidden,int nh, int nin, int nop,/
+int  double op){
+double sum=0;
+int iw;
+
+// compute the weighted sum of inputs to each of the nin neurons from each of the input data
+for(iw=0;iw<nlayer_up;iw=iw+1){
+sum = sum + w_up[iw]*zop_up[iw];
+op = act_fun(sum);
+}
+
+}
+
+
+
+
+
+
+
+
 
 // now need to build propper network using these routines above. 
 // start simple. How to decide number of layers and neurons in each layer?

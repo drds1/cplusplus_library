@@ -178,3 +178,24 @@ cout << "x and y (post random) " << x[i] << ' ' << y[i] << endl;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
